@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro" name="robotiq_hande_gripper" >
+
+  <!-- parameters -->
+  <xacro:arg name="use_fake_hardware" default="false" />
+
+  <!-- Import macros -->
+  <xacro:include filename="$(find robotiq_description)/urdf/robotiq_hande_macro.urdf.xacro" />
+
+  <link name="world" />
+  <xacro:robotiq_gripper name="RobotiqGripperHardwareInterface" prefix="" parent="world" use_fake_hardware="$(arg use_fake_hardware)">
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </xacro:robotiq_gripper>
+  
+</robot>

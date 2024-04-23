@@ -46,8 +46,7 @@
     <!-- Robotiq Coupler -->
     <!--  + Height added by the coupler: 13.9mm -->
     <!--  + Reference frame: at the middle (6.95mm) -->
-
-    <joint name="robotiq_coupler_joint" type="fixed">
+    <!-- <joint name="${prefix}robotiq_coupler_joint" type="fixed">
       <origin xyz="0 0 0.00695" rpy="0 0 ${-pi/2.0}" />
       <parent link="${parent}"/>
       <child link="${prefix}robotiq_coupler"/>
@@ -75,16 +74,17 @@
         </geometry>
         <material name="DarkGrey" />
       </visual>
-    </link>
+    </link> -->
 
 
-    <joint name="${prefix}robotiq_hande_base_joint" type="fixed">
-      <origin rpy="0 0 0" xyz="0 0 0.055"/>
-      <parent link="${prefix}robotiq_coupler"/>
-      <child link="${prefix}hande_link"/>
+    <joint name="${prefix}hande_base_joint" type="fixed">
+      <!-- <origin rpy="0 0 0" xyz="0 0 0.055"/> -->
+      <parent link="${parent}"/>
+      <child link="${prefix}hande_base_link"/>
+      <xacro:insert_block name="origin" />
     </joint>
 
-    <link name="${prefix}hande_link">
+    <link name="${prefix}hande_base_link">
       <inertial>
         <mass value="0.86387"/>
         <inertia 
@@ -112,7 +112,7 @@
 
     <joint name="${prefix}hande_left_finger_joint" type="prismatic">
       <origin rpy="0 0 0" xyz="0 -0.025 0.0345"/>
-      <parent link="${prefix}hande_link"/>
+      <parent link="${prefix}hande_base_link"/>
       <child link="${prefix}hande_left_finger"/>
       <axis xyz="0 1 0"/>
       <limit effort="130" lower="0" upper="0.025" velocity="0.15"/>
@@ -148,7 +148,7 @@
 
     <joint name="${prefix}hande_right_finger_joint" type="prismatic">
       <origin rpy="0 0 0" xyz="0 0.025 0.0345"/>
-      <parent link="${prefix}hande_link"/>
+      <parent link="${prefix}hande_base_link"/>
       <child link="${prefix}hande_right_finger"/>
       <axis xyz="0 -1 0"/>
       <limit effort="130" lower="0" upper="0.025" velocity="0.15"/>
@@ -185,7 +185,7 @@
 
     <joint name="${prefix}robotiq_hande_end_joint" type="fixed">
       <origin rpy="0 0 0" xyz="0 0 0.095"/>
-      <parent link="${prefix}hande_link"/>
+      <parent link="${prefix}hande_base_link"/>
       <child link="${prefix}hande_end"/>
     </joint>
 

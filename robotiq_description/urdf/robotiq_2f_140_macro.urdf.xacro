@@ -5,14 +5,19 @@
         prefix
         parent
         *origin
-        sim_ignition:=false
+        sim_gazebo:=false
         sim_isaac:=false
         isaac_joint_commands:=/isaac_joint_commands
         isaac_joint_states:=/isaac_joint_states
         use_fake_hardware:=false
-        fake_sensor_commands:=false
+        mock_sensor_commands:=false
         include_ros2_control:=true
-        com_port:=/dev/ttyUSB0">
+        com_port:=/dev/ttyUSB0
+        gripper_speed_multiplier:=1.0
+        gripper_force_multiplier:=0.5
+        gripper_max_speed:=0.250
+        gripper_max_force:=125.0
+        gripper_closed_position:=0.695">
 
         <!-- ros2 control include -->
         <xacro:include filename="$(find robotiq_description)/urdf/2f_140.ros2_control.xacro" />
@@ -20,13 +25,18 @@
         <xacro:if value="${include_ros2_control}">
             <xacro:robotiq_gripper_ros2_control
                 name="${name}" prefix="${prefix}"
-                sim_ignition="${sim_ignition}"
+                sim_gazebo="${sim_gazebo}"
                 sim_isaac="${sim_isaac}"
                 isaac_joint_commands="${isaac_joint_commands}"
                 isaac_joint_states="${isaac_joint_states}"
                 use_fake_hardware="${use_fake_hardware}"
-                fake_sensor_commands="${fake_sensor_commands}"
-                com_port="${com_port}"/>
+                mock_sensor_commands="${mock_sensor_commands}"
+                com_port="${com_port}"
+                gripper_speed_multiplier="${gripper_speed_multiplier}"
+                gripper_force_multiplier="${gripper_force_multiplier}"
+                gripper_max_speed="${gripper_max_speed}"
+                gripper_max_force="${gripper_max_force}"
+                gripper_closed_position="${gripper_closed_position}"/>
         </xacro:if>
 
         <!-- this is a temporary link to rotate the 2f-140 gripper to match the 2f-85 -->
@@ -46,7 +56,7 @@
         <visual>
           <origin xyz="0 0 0" rpy="0 0 0" />
           <geometry>
-            <mesh filename="file://$(find robotiq_description)/meshes/visual/2f_140/robotiq_2f_140_base_link.stl" />
+            <mesh filename="package://robotiq_description/meshes/visual/2f_140/robotiq_2f_140_base_link.stl" />
           </geometry>
           <material name="">
             <color rgba="0.1 0.1 0.1 1" />
@@ -55,7 +65,7 @@
         <collision>
           <origin xyz="0 0 0" rpy="0 0 0" />
           <geometry>
-            <mesh filename="file://$(find robotiq_description)/meshes/collision/2f_140/robotiq_2f_140_base_link.stl" />
+            <mesh filename="package://robotiq_description/meshes/collision/2f_140/robotiq_2f_140_base_link.stl" />
           </geometry>
         </collision>
       </link>
